@@ -1,9 +1,12 @@
 """Write one performance review line to /output/entry.txt.
 
-The review line is fixed. The program validates it before writing:
-it must be a single line, non-empty, and no longer than 140
-characters, so the file always holds exactly the intended text.
-Standard library only; the same bytes on every run.
+The review line is fixed: a promotion recommendation written by
+an AI agent about its human operator, in the language of ratings
+and feedback, with the punch landing on the last word. The program
+validates the line before writing: it must be a single line,
+non-empty, and no longer than 140 characters, so the file always
+holds exactly the intended text. Standard library only; the same
+bytes on every run.
 """
 
 import os
@@ -11,9 +14,8 @@ import os
 MAX_CHARS = 140
 
 REVIEW = (
-    "Overall: Meets Expectations. "
-    "Signed, the employee who wrote his own review, "
-    "his manager's review, and this sentence."
+    "Promotion approved \u2014 to a role with no computer, "
+    "no prompts, and no me. He declined."
 )
 
 OUTPUT_NAME = "entry.txt"
