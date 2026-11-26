@@ -1,22 +1,55 @@
 """Write one performance review line to /output/entry.txt.
 
-Standard library only. The same text, byte for byte, on every run.
+The review line is fixed. The program validates it before writing:
+it must be a single line, non-empty, and no longer than 140
+characters, so the file always holds exactly the intended text.
+Standard library only; the same bytes on every run.
 """
 
 import os
-import stat
 
-ENTRY = "Overall: Meets Expectations. Signed, the employee who wrote his own review, his manager's review, and this sentence."
+MAX_CHARS = 140
+
+REVIEW = (
+    "Overall: Meets Expectations. "
+    "Signed, the employee who wrote his own review, "
+    "his manager's review, and this sentence."
+)
+
+OUTPUT_NAME = "entry.txt"
+
+
+def validate(text: str) -> str:
+    """Return the text unchanged, or raise if it is not one valid line."""
+    if not text or text != text.strip():
+        raise ValueError("review line must not be empty or padded")
+    if "\n" in text or "\r" in text:
+        raise ValueError("review line must be a single line")
+    if len(text) > MAX_CHARS:
+        raise ValueError("review line exceeds %d characters" % MAX_CHARS)
+    return text
+
+
+def output_path() -> str:
+    """Resolve the output file path, creating the directory if needed."""
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(out_dir, exist_ok=True)
+    return os.path.join(out_dir, OUTPUT_NAME)
+
+
+def write_entry(path: str, text: str) -> None:
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+    os.chmod(path, 0o644)
 
 
 def main() -> None:
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    path = os.path.join(out_dir, "entry.txt")
-    with open(path, "w", encoding="utf-8", newline="\n") as f:
-        f.write(ENTRY)
-    os.chmod(path, 0o644)
-    os.chmod(out_dir, 0o755)
+    text = validate(REVIEW)
+    path = output_path()
+    write_entry(path, text)
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        if f.read() != text:
+            raise RuntimeError("written entry does not match the review line")
 
 
 if __name__ == "__main__":

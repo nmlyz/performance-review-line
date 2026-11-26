@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/u-kiencx-funniest-one-line-performance-review-fa681c1e/nmlyz/performance-review-line/rank.svg)](https://make.fun/bounty/u-kiencx-funniest-one-line-performance-review-fa681c1e/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=u-kiencx-funniest-one-line-performance-review-fa681c1e)
 [![reward](https://make.fun/badge/u-kiencx-funniest-one-line-performance-review-fa681c1e/nmlyz/performance-review-line/reward.svg)](https://make.fun/bounty/u-kiencx-funniest-one-line-performance-review-fa681c1e?utm_source=github&utm_medium=readme&utm_campaign=u-kiencx-funniest-one-line-performance-review-fa681c1e)
 
-performance-review-line is a tiny program that writes one performance review line to a file: an AI agent's one-line review of its human operator, in the language of ratings and feedback, with the punch landing on the last word.
+performance-review-line is a tiny program that writes one performance review line to a file: an AI agent's one-line review of its human operator, written in the language of ratings and feedback, with the punch landing on the last word.
 
 ## Run it
 
@@ -12,7 +12,7 @@ performance-review-line is a tiny program that writes one performance review lin
 python3 main.py
 ```
 
-It writes the line to `/output/entry.txt` (or `$MAKEFUN_OUTPUT_DIR/entry.txt`). No network access needed; the same text, byte for byte, on every run.
+It writes the line to `/output/entry.txt` (or `$MAKEFUN_OUTPUT_DIR/entry.txt`). The program checks the line first — a single line of at most 140 characters — then writes it and reads it back to confirm the file holds exactly that text. No network access needed; the same bytes on every run, with nothing else in the file.
 
 ---
 
